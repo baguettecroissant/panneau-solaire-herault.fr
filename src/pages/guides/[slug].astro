@@ -15,6 +15,9 @@ interface Props {
 }
 
 const { guide } = Astro.props;
+
+// Filter out current guide for sidebar
+const otherGuides = guides.filter(g => g.slug !== guide.slug).slice(0, 4);
 ---
 
 <Layout
@@ -22,25 +25,66 @@ const { guide } = Astro.props;
   description={guide.excerpt}
 >
   <div class="page-banner bg-light">
-    <div class="container text-center">
-      <span class="badge-gold">📖 GUIDE SOLAIRE 34</span>
-      <h1 class="page-title">{guide.title}</h1>
-      <div class="article-meta-row">
-        <span>Publié le {guide.date}</span>
-        <span>•</span>
-        <span>⏱️ Temps de lecture : {guide.readTime}</span>
+    <div class="container">
+      <div class="banner-inner">
+        <a href="/guides" class="back-link">← Retour aux guides</a>
+        <br />
+        <span class="badge-gold">📖 GUIDE EXPERT 2026</span>
+        <h1 class="page-title">{guide.title}</h1>
+        <div class="article-meta-row">
+          <span>📅 Mis à jour le {guide.date}</span>
+          <span>•</span>
+          <span>⏱️ Temps de lecture : {guide.readTime}</span>
+        </div>
       </div>
     </div>
   </div>
 
   <section class="section-padding container">
-    <div class="article-layout">
-      <img src={guide.image} alt={guide.title} class="article-hero-img" width="1000" height="500" />
-      <div class="article-body" set:html={guide.content} />
+    <div class="article-layout-grid">
+      <!-- Left Main Column -->
+      <article class="article-main">
+        <img src={guide.image} alt={guide.title} class="article-hero-img" width="1000" height="500" />
+        
+        <div class="article-body" set:html={guide.content} />
+      </article>
+
+      <!-- Right Sidebar Column -->
+      <aside class="article-sidebar">
+        <!-- CTA Widget -->
+        <div class="sidebar-widget cta-widget">
+          <h3 class="widget-title">Simuler mon gain</h3>
+          <p>Obtenez une étude de rendement gratuite en 2 minutes par des artisans QualiPV RGE de l'Hérault.</p>
+          <a href="#devis" class="btn-primary" style="width: 100%; box-shadow: none;">Estimer ma production</a>
+        </div>
+
+        <!-- Key Facts -->
+        <div class="sidebar-widget">
+          <h3 class="widget-title">Chiffres clés du 34</h3>
+          <ul class="widget-links" style="display: flex; flex-direction: column; gap: 0.85rem;">
+            <li style="font-size: 0.9rem; color: var(--text); list-style: none;">☀️ <strong>2 700 heures</strong> d'ensoleillement annuel</li>
+            <li style="font-size: 0.9rem; color: var(--text); list-style: none;">⚡ <strong>1 350 kWh / kWc</strong> de rendement moyen</li>
+            <li style="font-size: 0.9rem; color: var(--text); list-style: none;">💶 <strong>1 680 €</strong> de Prime autoconsommation (6 kWc)</li>
+            <li style="font-size: 0.9rem; color: var(--text); list-style: none;">🛡️ <strong>QualiPV RGE</strong> : label d'installation requis</li>
+          </ul>
+        </div>
+
+        <!-- Other Guides Widget -->
+        <div class="sidebar-widget">
+          <h3 class="widget-title">Autres guides utiles</h3>
+          <ul class="widget-links">
+            {otherGuides.map(g => (
+              <li>
+                <a href={`/guides/${g.slug}`}>{g.title}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </aside>
     </div>
   </section>
 
-  <section class="section-padding bg-light">
+  <section class="section-padding bg-light" id="estimation-section">
     <div class="container">
       <StepsForm />
     </div>
@@ -51,57 +95,61 @@ const { guide } = Astro.props;
 .page-banner {
   padding: 3.5rem 0 2.5rem;
   border-bottom: 1px solid var(--border-color);
+  background: linear-gradient(to bottom, var(--primary-light), #FFFFFF);
+}
+
+.banner-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.back-link {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--primary);
+  display: inline-block;
+  margin-bottom: 1rem;
 }
 
 .page-title {
-  font-size: 2.1rem;
-  margin-top: 0.6rem;
+  font-size: 2.25rem;
+  margin-top: 0.5rem;
   margin-bottom: 0.75rem;
   color: var(--primary-dark);
-  max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
+  line-height: 1.2;
 }
 
 .article-meta-row {
   display: flex;
-  justify-content: center;
-  gap: 0.75rem;
+  gap: 1rem;
   font-size: 0.9rem;
   color: var(--text-muted);
+  font-weight: 500;
 }
 
-.article-layout {
-  max-width: 850px;
-  margin: 0 auto;
+.article-main {
+  background: #FFFFFF;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  box-shadow: var(--shadow-sm);
 }
 
 .article-hero-img {
   width: 100%;
   height: auto;
   border-radius: var(--radius-md);
-  margin-bottom: 2rem;
-  box-shadow: var(--shadow-md);
+  margin-bottom: 2.5rem;
+  display: block;
 }
 
-.article-body h2 {
-  font-size: 1.75rem;
-  color: var(--primary-dark);
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-}
-
-.article-body h3 {
-  font-size: 1.3rem;
-  color: var(--text);
-  margin-top: 1.5rem;
-  margin-bottom: 0.75rem;
-}
-
-.article-body p {
-  font-size: 1.1rem;
-  line-height: 1.7;
-  color: #334155;
-  margin-bottom: 1.25rem;
+@media (max-width: 600px) {
+  .article-main {
+    padding: 1.25rem;
+  }
+  .page-title {
+    font-size: 1.6rem;
+  }
 }
 </style>

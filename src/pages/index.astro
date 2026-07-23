@@ -1,0 +1,265 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Simulator from '../components/Simulator.astro';
+import StepsForm from '../components/StepsForm.astro';
+import communes from '../data/communes.json';
+
+const topCommunes = communes.slice(0, 16);
+---
+
+<Layout
+  title="Panneaux Solaires Hérault (34) — Installation & Devis Gratuit 2026"
+  description="Installez vos panneaux solaires photovoltaïques dans l'Hérault (34). Profitez des 2 700h de soleil annuel à Montpellier, Béziers, Sète. Économisez jusqu'à 80% avec des pros QualiPV RGE."
+>
+  <!-- HERO SECTION -->
+  <section class="hero-solar">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <span class="badge-gold">☀️ 2 700h de soleil/an dans l'Hérault</span>
+        <h1 class="hero-title">
+          Produisez votre propre électricité avec le <span>Solaire Héraultais</span>
+        </h1>
+        <p class="hero-subtitle">
+          Profitez du rendement exceptionnel du département 34 (1 350 kWh/kWc). Réduisez votre facture électrique jusqu'à 80% grâce à l'autoconsommation avec revente du surplus EDF OA.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#devis" class="btn-primary">
+            Calculer mes économies solaires
+          </a>
+          <a href="#simulateur" class="btn-secondary">
+            Simulateur gratuit
+          </a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="hero-stat-item">
+            <span class="hero-stat-val">2 700h</span>
+            <span class="hero-stat-lbl">Soleil / An (34)</span>
+          </div>
+          <div class="hero-stat-item">
+            <span class="hero-stat-val">1 680 €</span>
+            <span class="hero-stat-lbl">Prime Autoconsom.</span>
+          </div>
+          <div class="hero-stat-item">
+            <span class="hero-stat-val">5 à 7 ans</span>
+            <span class="hero-stat-lbl">Retour sur Invest.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-media">
+        <img
+          src="/images/hero-panneau-solaire-herault.png"
+          alt="Villa héraultaise moderne équipée de panneaux solaires photovoltaïques"
+          class="hero-img"
+          width="600"
+          height="600"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- SIMULATOR SECTION -->
+  <section class="section-padding container">
+    <Simulator />
+  </section>
+
+  <!-- PRIX ET GAMMES DE PRIX HÉRAULT 2026 -->
+  <section class="section-padding bg-light">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge-blue">💡 Tarifs Transparents 2026</span>
+        <h2 class="section-title">Prix des Installations Solaires dans l'Hérault</h2>
+        <p class="section-subtitle">Matériel haut de gamme (modules monocristallins PERC / bifaciaux & micro-onduleurs Enphase IQ8)</p>
+      </div>
+
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Puissance (kWc)</th>
+              <th>Description / Usage</th>
+              <th>Production 34 / An</th>
+              <th>Prix TTC (Pose RGE incluse)</th>
+              <th>Prime Autoconsommation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Kit 3 kWc</strong> (8 panneaux)</td>
+              <td>Maison moyenne, sans piscine (climatisation)</td>
+              <td><span class="data-mono">4 050 kWh</span></td>
+              <td><span class="data-mono">6 800 – 9 500 €</span></td>
+              <td><span class="data-mono text-gold">1 050 €</span></td>
+            </tr>
+            <tr>
+              <td><strong>Kit 6 kWc</strong> (16 panneaux)</td>
+              <td>Villa héraultaise + Pompe à chaleur + Piscine</td>
+              <td><span class="data-mono">8 100 kWh</span></td>
+              <td><span class="data-mono">11 500 – 15 500 €</span></td>
+              <td><span class="data-mono text-gold">1 680 €</span></td>
+            </tr>
+            <tr>
+              <td><strong>Kit 9 kWc</strong> (24 panneaux)</td>
+              <td>Grande résidence, forte consommation & Véhicule Électrique</td>
+              <td><span class="data-mono">12 150 kWh</span></td>
+              <td><span class="data-mono">15 500 – 21 000 €</span></td>
+              <td><span class="data-mono text-gold">2 250 €</span></td>
+            </tr>
+            <tr>
+              <td><strong>Batterie Lithium LFP</strong></td>
+              <td>Stockage nocturne 5 à 10 kWh (autonomie)</td>
+              <td><span class="data-mono">N/A</span></td>
+              <td><span class="data-mono">4 000 – 8 000 €</span></td>
+              <td><span class="data-mono text-gold">TVA 10%</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="text-center" style="margin-top: 2rem;">
+        <a href="/tarifs" class="btn-secondary">Consulter tous les détails des tarifs 2026 →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- POURQUOI LE SOLAIRE DANS LE 34 -->
+  <section class="section-padding container">
+    <div class="section-header">
+      <span class="badge-gold">🏆 Atouts du Département 34</span>
+      <h2 class="section-title">Pourquoi installer des panneaux solaires dans l'Hérault ?</h2>
+    </div>
+
+    <div class="features-grid">
+      <div class="card-tech">
+        <div class="feat-icon">☀️</div>
+        <h3>Ensoleillement Top 5 France</h3>
+        <p>Avec 2 700 heures de soleil par an à Montpellier, Béziers et Sète, l'Hérault produit 30% d'électricité de plus que la moyenne nationale.</p>
+      </div>
+
+      <div class="card-tech">
+        <div class="feat-icon">❄️</div>
+        <h3>Climatisation & Pompes à Chaleur</h3>
+        <p>En été, votre production solaire atteint son pic exactement au moment où vos climatiseurs tournent au maximum : l'autoconsommation parfaite.</p>
+      </div>
+
+      <div class="card-tech">
+        <div class="feat-icon">🏡</div>
+        <h3>Résidences Neuves RE2020</h3>
+        <p>Les quartiers récents de Port Marianne, Lattes et Castelnau-le-Lez sont pré-câblés pour le solaire, réduisant les frais de raccordement.</p>
+      </div>
+
+      <div class="card-tech">
+        <div class="feat-icon">💶</div>
+        <h3>Aides & Revente EDF OA</h3>
+        <p>Accédez aux subventions 2026 (MaPrimeRénov', Prime autoconsommation, TVA 10%) et revendez votre surplus au tarif garanti EDF OA sur 20 ans.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOP COMMUNES HÉRAULT -->
+  <section class="section-padding bg-light">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge-blue">📍 Réseau Local Hérault (34)</span>
+        <h2 class="section-title">Installateurs Solaires Certifiés par Commune</h2>
+        <p class="section-subtitle">Retrouvez les prévisions de production et pros QualiPV dans votre ville</p>
+      </div>
+
+      <div class="cities-grid">
+        {topCommunes.map(c => (
+          <a href={`/panneau-solaire-${c.slug}`} class="city-card">
+            <span class="city-name">{c.name} ({c.codePostal})</span>
+            <span class="city-pop">{c.population.toLocaleString('fr-FR')} hab.</span>
+            <span class="city-sun">☀️ 2 700h soleil</span>
+          </a>
+        ))}
+      </div>
+
+      <div class="text-center" style="margin-top: 2rem;">
+        <a href="/communes" class="btn-secondary">Voir les 79 communes de l'Hérault →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEPS FORM LEAD CAPTURE -->
+  <section class="section-padding container">
+    <StepsForm />
+  </section>
+</Layout>
+
+<style>
+.hero-media {
+  display: flex;
+  justify-content: center;
+}
+
+.hero-img {
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.feat-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.cities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.city-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border-color);
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.city-card:hover {
+  border-color: var(--secondary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.city-name {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--primary-dark);
+}
+
+.city-pop {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.city-sun {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--secondary);
+  font-weight: 600;
+}
+</style>

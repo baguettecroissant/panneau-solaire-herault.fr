@@ -1,0 +1,90 @@
+---
+import Layout from '../layouts/Layout.astro';
+import StepsForm from '../components/StepsForm.astro';
+---
+
+<Layout
+  title="Demande de Devis Panneau Solaire Hérault (34) — Gratuit & Sans Engagement"
+  description="Obtenez jusqu'à 3 devis gratuits d'installateurs solaires certifiés RGE QualiPV dans l'Hérault (34). Simulation d'autoconsommation et calcul des aides 2026."
+>
+  <div class="page-banner bg-light">
+    <div class="container text-center">
+      <span class="badge-gold">⚡ SIMULATION & DEVIS GRATUIT 2026</span>
+      <h1 class="page-title">Votre Étude Solaire Personnalisée dans l'Hérault</h1>
+      <p class="page-sub">Remplissez le formulaire en 2 minutes pour recevoir vos devis d'installateurs locaux QualiPV (Montpellier, Béziers, Sète...)</p>
+    </div>
+  </div>
+
+  <div class="container section-padding">
+    <StepsForm />
+  </div>
+
+  <div class="bg-light section-padding">
+    <div class="container">
+      <div class="section-header">
+        <h2>Comment fonctionne votre demande de devis ?</h2>
+      </div>
+
+      <div class="steps-info-grid">
+        <div class="card-tech">
+          <span class="info-step-num">1</span>
+          <h3>Formulaire en ligne</h3>
+          <p>Indiquez la surface de votre toiture, vos habitudes de consommation et votre commune dans l'Hérault.</p>
+        </div>
+
+        <div class="card-tech">
+          <span class="info-step-num">2</span>
+          <h3>Étude de faisabilité</h3>
+          <p>Nos partenaires RGE QualiPV 34 analysent l'exposition de votre toit et calculent votre rendement solaire exact.</p>
+        </div>
+
+        <div class="card-tech">
+          <span class="info-step-num">3</span>
+          <h3>Réception des devis</h3>
+          <p>Vous recevez jusqu'à 3 devis détaillés comprenant le coût net après primes et subventions d'État.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+.page-banner {
+  padding: 3.5rem 0 2.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.page-title {
+  font-size: 2.3rem;
+  margin-top: 0.6rem;
+  color: var(--primary-dark);
+}
+
+.page-sub {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  max-width: 650px;
+  margin: 0.5rem auto 0;
+}
+
+.steps-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.info-step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: var(--secondary);
+  color: #FFFFFF;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.2rem;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+}
+</style>

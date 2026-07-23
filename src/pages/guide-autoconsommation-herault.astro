@@ -1,0 +1,125 @@
+---
+import Layout from '../layouts/Layout.astro';
+import StepsForm from '../components/StepsForm.astro';
+---
+
+<Layout
+  title="Guide de l'Autoconsommation Solaire dans l'Hérault (34) — 2026"
+  description="Tout comprendre sur l'autoconsommation photovoltaïque dans l'Hérault : fonctionnement, taux d'autonomie, revente du surplus EDF OA et optimisation clim/piscine."
+>
+  <div class="page-banner bg-light">
+    <div class="container text-center">
+      <span class="badge-gold">📘 GUIDE PILLIER 2026</span>
+      <h1 class="page-title">Autoconsommation Solaire à Montpellier et dans l'Hérault</h1>
+      <p class="page-sub">Comment produire et consommer sa propre électricité verte dans le département du 34</p>
+    </div>
+  </div>
+
+  <section class="section-padding container">
+    <div class="article-layout">
+      <img
+        src="/images/autoconsommation-solaire-montpellier.png"
+        alt="Famille utilisant l'autoconsommation solaire dans l'Hérault"
+        class="article-hero-img"
+        width="1000"
+        height="500"
+      />
+
+      <div class="article-body">
+        <h2>Qu'est-ce que l'autoconsommation photovoltaïque ?</h2>
+        <p>
+          L'autoconsommation solaire consiste à consommer directement l'électricité produite par les panneaux photovoltaïques installés sur la toiture de votre maison héraultaise. Dans un département qui enregistre plus de <strong>2 700 heures de soleil par an</strong>, cette stratégie permet de substituer l'électricité du réseau (dont le tarif augmente régulièrement) par une énergie 100% gratuite et renouvelable.
+        </p>
+
+        <h3>Autoconsommation avec revente du surplus EDF OA</h3>
+        <p>
+          En France et particulièrement dans le 34, le modèle le plus rentable est l'<strong>autoconsommation avec vente du surplus</strong>. Lorsque vos panneaux produisent plus que ce que votre maison ne consomme (par exemple au milieu d'une journée ensoleillée d'avril), l'excédent est automatiquement réinjecté sur le réseau Enedis et racheté par EDF Obligation d'Achat (EDF OA) à un tarif fixé par la loi pendant 20 ans (0,13 €/kWh pour les installations ≤ 9 kWc).
+        </p>
+
+        <h3>Le profil de consommation idéal dans l'Hérault</h3>
+        <p>
+          Le climat méditerranéen offre un avantage majeur pour l'autoconsommation :
+        </p>
+        <ul>
+          <li><strong>En été</strong> : la climatisation et la pompe de filtration de la piscine consomment énormément d'électricité précisément pendant les heures de fort ensoleillement (11h-17h). L'autoconsommation atteint alors des taux records sans avoir besoin de batterie.</li>
+          <li><strong>En hiver</strong> : la pompe à chaleur (PAC) ou les radiateurs absorbent la production solaire des belles journées d'hiver languedociennes.</li>
+        </ul>
+
+        <h2>Comment optimiser son taux d'autoconsommation ?</h2>
+        <p>
+          Pour maximiser vos économies à Montpellier, Béziers ou Sète, il convient d'adopter des éco-gestes simples pilotés par la domotique :
+        </p>
+        <ol>
+          <li>Programmer la filtration de la piscine entre 11h et 16h.</li>
+          <li>Déclencher le chauffe-eau thermodynamique ou le ballon d'eau chaude en journée.</li>
+          <li>Lancer le lave-linge et le lave-vaisselle pendant le pic de production solaire.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding bg-light">
+    <div class="container">
+      <StepsForm />
+    </div>
+  </section>
+</Layout>
+
+<style>
+.page-banner {
+  padding: 3.5rem 0 2.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.page-title {
+  font-size: 2.3rem;
+  margin-top: 0.6rem;
+  color: var(--primary-dark);
+}
+
+.page-sub {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+.article-layout {
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+.article-hero-img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-md);
+}
+
+.article-body h2 {
+  font-size: 1.8rem;
+  color: var(--primary-dark);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.article-body h3 {
+  font-size: 1.35rem;
+  color: var(--text);
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.article-body p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #334155;
+  margin-bottom: 1.25rem;
+}
+
+.article-body ul, .article-body ol {
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+</style>

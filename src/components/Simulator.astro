@@ -1,0 +1,293 @@
+---
+interface Props {
+  communeName?: string;
+}
+
+const { communeName = "l'Hérault" } = Astro.props;
+---
+
+<div class="simulator-card" id="simulateur">
+  <div class="sim-header">
+    <span class="badge-gold">☀️ Simulateur Solaire Hérault (34)</span>
+    <h2 class="sim-title">Calculez votre production solaire à {communeName}</h2>
+    <p class="sim-sub">Estimation basée sur l'ensoleillement réel du 34 (2 700h/an)</p>
+  </div>
+
+  <div class="sim-body">
+    <!-- Controls Column -->
+    <div class="sim-controls">
+      <div class="control-group">
+        <label for="sim-surface">Surface disponible ou nombre de panneaux</label>
+        <div class="range-value-display">
+          <span id="surface-val">30 m²</span>
+          <span id="panneaux-val" class="sub-val">(~16 panneaux — 6 kWc)</span>
+        </div>
+        <input type="range" id="sim-surface" min="15" max="90" step="5" value="30" class="sim-slider" />
+      </div>
+
+      <div class="control-group">
+        <label for="sim-orientation">Orientation du toit</label>
+        <select id="sim-orientation" class="sim-select">
+          <option value="1.0">Sud (Optimale — 100%)</option>
+          <option value="0.95" selected>Sud-Est / Sud-Ouest (Très bonne — 95%)</option>
+          <option value="0.82">Est / Ouest (Bonne — 82%)</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label for="sim-bill">Facture d'électricité mensuelle actuelle</label>
+        <div class="range-value-display">
+          <span id="bill-val">160 € / mois</span>
+        </div>
+        <input type="range" id="sim-bill" min="60" max="450" step="10" value="160" class="sim-slider" />
+      </div>
+    </div>
+
+    <!-- Results Display Column -->
+    <div class="sim-results">
+      <div class="res-box res-primary">
+        <span class="res-lbl">Production estimée</span>
+        <span class="res-val data-mono" id="res-prod">8 100 kWh / an</span>
+        <span class="res-sub">1 350 kWh par kWc installé dans le 34</span>
+      </div>
+
+      <div class="res-grid-two">
+        <div class="res-box">
+          <span class="res-lbl">Économies / An</span>
+          <span class="res-val text-gold data-mono" id="res-savings">1 536 €</span>
+        </div>
+        <div class="res-box">
+          <span class="res-lbl">Prime Autoconsommation</span>
+          <span class="res-val text-blue data-mono" id="res-prime">1 680 €</span>
+        </div>
+      </div>
+
+      <div class="res-box res-roi">
+        <span class="res-lbl">Amortissement estimé (ROI)</span>
+        <span class="res-val text-success data-mono" id="res-roi">5,5 ans</span>
+        <span class="res-sub">Basé sur une installation RGE QualiPV subventionnée</span>
+      </div>
+
+      <a href="#devis" class="btn-primary btn-block">
+        Obtenir mon étude personnalisée gratuite
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+.simulator-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 2.5rem;
+  margin: 2rem 0;
+}
+
+.sim-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.sim-title {
+  font-size: 1.85rem;
+  margin-top: 0.6rem;
+  margin-bottom: 0.4rem;
+  color: var(--primary-dark);
+}
+
+.sim-sub {
+  color: var(--text-muted);
+}
+
+.sim-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+@media (max-width: 850px) {
+  .sim-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sim-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.control-group label {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.range-value-display {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.sub-val {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.sim-slider {
+  width: 100%;
+  accent-color: var(--secondary);
+  height: 6px;
+  background: var(--primary-light);
+  border-radius: 4px;
+}
+
+.sim-select {
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  background-color: var(--bg);
+}
+
+.sim-results {
+  background: var(--primary-light);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.res-box {
+  background: #FFFFFF;
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.25rem;
+  border: 1px solid #DBEAFE;
+}
+
+.res-primary {
+  border-left: 4px solid var(--primary);
+}
+
+.res-roi {
+  border-left: 4px solid var(--secondary);
+  background: #FEFCE8;
+}
+
+.res-lbl {
+  display: block;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.res-val {
+  display: block;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+  line-height: 1.2;
+}
+
+.res-sub {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+}
+
+.res-grid-two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.btn-block {
+  width: 100%;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+</style>
+
+<script>
+  function initSimulator() {
+    const surfaceInput = document.getElementById('sim-surface') as HTMLInputElement;
+    const orientationSelect = document.getElementById('sim-orientation') as HTMLSelectElement;
+    const billInput = document.getElementById('sim-bill') as HTMLInputElement;
+
+    const surfaceVal = document.getElementById('surface-val');
+    const panneauxVal = document.getElementById('panneaux-val');
+    const billVal = document.getElementById('bill-val');
+
+    const resProd = document.getElementById('res-prod');
+    const resSavings = document.getElementById('res-savings');
+    const resPrime = document.getElementById('res-prime');
+    const resRoi = document.getElementById('res-roi');
+
+    if (!surfaceInput || !orientationSelect || !billInput) return;
+
+    function update() {
+      const surface = parseFloat(surfaceInput.value);
+      const orientCoeff = parseFloat(orientationSelect.value);
+      const bill = parseFloat(billInput.value);
+
+      const nbPanneaux = Math.round(surface / 1.9);
+      const kwc = Math.round((nbPanneaux * 0.42) * 10) / 10; // ~420W per panel
+      const prodKwh = Math.round(kwc * 1350 * orientCoeff);
+
+      // Financials
+      const annualBill = bill * 12;
+      const autoconsommed = Math.min(prodKwh * 0.2516, annualBill * 0.75);
+      const surplusSold = Math.max(0, prodKwh - (autoconsommed / 0.2516)) * 0.13;
+      const totalSavings = Math.round(autoconsommed + surplusSold);
+
+      // Prime 2026
+      let prime = 0;
+      if (kwc <= 3) prime = 1050;
+      else if (kwc <= 6) prime = 1680;
+      else if (kwc <= 9) prime = 2250;
+      else prime = 2800;
+
+      // Net cost & ROI
+      const grossCost = kwc * 2100;
+      const netCost = grossCost - prime;
+      const roiYears = Math.round((netCost / (totalSavings || 1)) * 10) / 10;
+
+      if (surfaceVal) surfaceVal.textContent = `${surface} m²`;
+      if (panneauxVal) panneauxVal.textContent = `(~${nbPanneaux} panneaux — ${kwc} kWc)`;
+      if (billVal) billVal.textContent = `${bill} € / mois`;
+
+      if (resProd) resProd.textContent = `${prodKwh.toLocaleString('fr-FR')} kWh / an`;
+      if (resSavings) resSavings.textContent = `${totalSavings.toLocaleString('fr-FR')} €`;
+      if (resPrime) resPrime.textContent = `${prime.toLocaleString('fr-FR')} €`;
+      if (resRoi) resRoi.textContent = `${roiYears} ans`;
+    }
+
+    surfaceInput.addEventListener('input', update);
+    orientationSelect.addEventListener('change', update);
+    billInput.addEventListener('input', update);
+
+    update();
+  }
+
+  document.addEventListener('DOMContentLoaded', initSimulator);
+</script>

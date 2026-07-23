@@ -1,0 +1,326 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Simulator from '../components/Simulator.astro';
+import StepsForm from '../components/StepsForm.astro';
+import communes from '../data/communes.json';
+
+export async function getStaticPaths() {
+  return communes.map(c => ({
+    params: { commune: c.slug },
+    props: { communeData: c }
+  }));
+}
+
+const { communeData } = Astro.props;
+const { name, codePostal, population, stats, blocs } = communeData;
+
+const schemaLocal = {
+  "@context": "https://schema.org",
+  "@type": "SolarEnergyContractor",
+  "name": `Panneau Solaire ${name} (34)`,
+  "url": `https://panneau-solaire-herault.fr/panneau-solaire-${communeData.slug}`,
+  "telephone": "04 67 00 00 00",
+  "areaServed": {
+    "@type": "City",
+    "name": name,
+    "postalCode": codePostal
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": name,
+    "addressRegion": "Hérault",
+    "postalCode": codePostal,
+    "addressCountry": "FR"
+  }
+};
+---
+
+<Layout
+  title={`Panneaux Solaires à ${name} (${codePostal}) — Pro Certifié Hérault`}
+  description={`Installation de panneaux solaires photovoltaïques à ${name} (${codePostal}). Simulation d'autoconsommation, rendement 1 350 kWh/kWc, aides 2026 et devis RGE QualiPV.`}
+  schemaJson={schemaLocal}
+>
+  <!-- CITY HERO -->
+  <section class="city-hero">
+    <div class="container text-center">
+      <span class="badge-gold">📍 HÉRAULT (34) — {name} ({codePostal})</span>
+      <h1 class="city-title">Panneaux Solaires à {name} ({codePostal})</h1>
+      <p class="city-subtitle">
+        Installateur RGE QualiPV & Simulation d'autoconsommation gratuite
+      </p>
+
+      <div class="city-stats-row">
+        <div class="stat-pill">
+          <span class="stat-num">2 700h</span>
+          <span class="stat-label">Soleil / An à {name}</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-num">{stats.prod6kwc}</span>
+          <span class="stat-label">Prod. 6 kWc</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-num">{stats.savings6kwc}</span>
+          <span class="stat-label">Économies / An</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-num">{stats.prime6kwc}</span>
+          <span class="stat-label">Prime Énergie</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOC 1: INTRO LOCALE -->
+  <section class="section-padding container">
+    <div class="content-box">
+      <h2 class="h2-tech">⚡ Installation Solaire à {name} : Rendement & Autoconsommation</h2>
+      <p class="lead-text">{blocs.intro}</p>
+    </div>
+  </section>
+
+  <!-- SIMULATOR MODULE -->
+  <section class="section-padding bg-light">
+    <div class="container">
+      <Simulator communeName={name} />
+    </div>
+  </section>
+
+  <!-- BLOC 2 & BLOC 3: CONSEIL & PATRIMOINE LOCAL -->
+  <section class="section-padding container">
+    <div class="two-col-grid">
+      <!-- Conseil Local -->
+      <div class="card-tech">
+        <span class="badge-blue">📋 Démarches & Aides 34</span>
+        <h3 class="card-title-lg">Conseils & Réglementation Solaire à {name}</h3>
+        <p>{blocs.conseil}</p>
+      </div>
+
+      <!-- Patrimoine & Toiture Local -->
+      <div class="card-tech">
+        <span class="badge-gold">🏛️ Architecture & Intégration</span>
+        <h3 class="card-title-lg">Adaptation aux toitures héraultaises de {name}</h3>
+        <p>{blocs.patrimoine}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TARIFS PAR PUISSANCE SUR LA VILLE -->
+  <section class="section-padding bg-light">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Prix d'une installation solaire à {name} (2026)</h2>
+        <p class="section-subtitle">Matériel certifié garantie 25 ans, pose par un artisan RGE de l'Hérault</p>
+      </div>
+
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Kit Solaire</th>
+              <th>Production à {name}</th>
+              <th>Économies Annuelles</th>
+              <th>Prime Autoconsommation</th>
+              <th>Prix Posé TTC</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Kit 3 kWc</strong> (8 panneaux)</td>
+              <td><span class="data-mono">{stats.prod3kwc}</span></td>
+              <td><span class="data-mono">~1 020 €/an</span></td>
+              <td><span class="data-mono text-gold">1 050 €</span></td>
+              <td><span class="data-mono">6 800 – 9 500 €</span></td>
+            </tr>
+            <tr>
+              <td><strong>Kit 6 kWc</strong> (16 panneaux)</td>
+              <td><span class="data-mono">{stats.prod6kwc}</span></td>
+              <td><span class="data-mono">{stats.savings6kwc}</span></td>
+              <td><span class="data-mono text-gold">{stats.prime6kwc}</span></td>
+              <td><span class="data-mono">11 500 – 15 500 €</span></td>
+            </tr>
+            <tr>
+              <td><strong>Kit 9 kWc</strong> (24 panneaux)</td>
+              <td><span class="data-mono">12 150 kWh/an</span></td>
+              <td><span class="data-mono">~3 050 €/an</span></td>
+              <td><span class="data-mono text-gold">2 250 €</span></td>
+              <td><span class="data-mono">15 500 – 21 000 €</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOC 4: FAQ LOCALE -->
+  <section class="section-padding container">
+    <div class="section-header">
+      <span class="badge-gold">❓ Questions Fréquentes</span>
+      <h2 class="section-title">FAQ Panneaux Solaires à {name}</h2>
+    </div>
+
+    <div class="faq-list">
+      {blocs.faq.map((item: any) => (
+        <div class="card-tech faq-card">
+          <h3 class="faq-q">Q : {item.q}</h3>
+          <p class="faq-a">{item.a}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- BLOC 5: DONNÉES MARCHÉ & STEPS FORM -->
+  <section class="section-padding bg-light">
+    <div class="container">
+      <div class="market-summary-card card-tech">
+        <h3>📊 Marché du Solaire à {name} ({codePostal})</h3>
+        <div class="market-metrics">
+          <div>
+            <span class="m-val">{blocs.marche.installateursRGE}</span>
+            <span class="m-lbl">Pros RGE Partenaires 34</span>
+          </div>
+          <div>
+            <span class="m-val">{blocs.marche.croissanceAns}</span>
+            <span class="m-lbl">Croissance Annuelle</span>
+          </div>
+          <div>
+            <span class="m-val">{blocs.marche.delaiMoyen}</span>
+            <span class="m-lbl">Délai Raccordement</span>
+          </div>
+        </div>
+      </div>
+
+      <StepsForm defaultVille={name} defaultCp={codePostal} />
+    </div>
+  </section>
+</Layout>
+
+<style>
+.city-hero {
+  background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 50%, #1E40AF 100%);
+  color: #FFFFFF;
+  padding: 4rem 0 3.5rem;
+}
+
+.city-title {
+  font-size: 2.5rem;
+  color: #FFFFFF;
+  margin-top: 0.6rem;
+}
+
+.city-subtitle {
+  color: #93C5FD;
+  font-size: 1.15rem;
+  margin-bottom: 2rem;
+}
+
+.city-stats-row {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.stat-pill {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-pill);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-num {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: #FACC15;
+  font-size: 1.15rem;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: #E2E8F0;
+  text-transform: uppercase;
+}
+
+.content-box {
+  background: #FFFFFF;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+}
+
+.h2-tech {
+  color: var(--primary-dark);
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+}
+
+.lead-text {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.two-col-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.75rem;
+}
+
+@media (max-width: 800px) {
+  .two-col-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card-title-lg {
+  font-size: 1.35rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.8rem;
+  color: var(--primary-dark);
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+.faq-q {
+  font-size: 1.1rem;
+  color: var(--primary-dark);
+  margin-bottom: 0.5rem;
+}
+
+.faq-a {
+  color: var(--text-muted);
+}
+
+.market-summary-card {
+  max-width: 720px;
+  margin: 0 auto 2.5rem;
+  text-align: center;
+}
+
+.market-metrics {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1.25rem;
+}
+
+.m-val {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.m-lbl {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+</style>

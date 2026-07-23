@@ -1,0 +1,59 @@
+---
+import Layout from '../layouts/Layout.astro';
+import config from '../data/config.json';
+---
+
+<Layout
+  title={`Politique de Confidentialité — ${config.brandName}`}
+  description={`Engagement RGPD et politique de protection des données personnelles sur ${config.domain}`}
+>
+  <div class="page-banner bg-light">
+    <div class="container text-center">
+      <h1 class="page-title">Politique de Confidentialité (RGPD)</h1>
+    </div>
+  </div>
+
+  <section class="section-padding container">
+    <div class="content-box">
+      <h2>1. Collecte des données personnelles</h2>
+      <p>
+        Les données personnelles collectées sur <strong>{config.domain}</strong> comprennent votre nom, prénom, adresse e-mail, numéro de téléphone, code postal et détails relatifs à votre projet de travaux solaires dans l'Hérault.
+      </p>
+
+      <h2>2. Utilisation des données</h2>
+      <p>
+        Vos données sont utilisées exclusivement pour vous transmettre des simulations de production personnalisées et vous mettre en relation avec des professionnels certifiés RGE du département du 34.
+      </p>
+
+      <h2>3. Vos droits informatique et libertés</h2>
+      <p>
+        Vous disposez à tout moment d'un droit d'accès, de rectification, de suppression et d'opposition sur l'ensemble de vos données personnelles en nous contactant via le site.
+      </p>
+    </div>
+  </section>
+</Layout>
+
+<style>
+.page-banner {
+  padding: 3rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+.content-box {
+  background: #FFFFFF;
+  border: 1px solid var(--border-color);
+  padding: 2.5rem;
+  border-radius: var(--radius-md);
+  max-width: 850px;
+  margin: 0 auto;
+}
+.content-box h2 {
+  font-size: 1.4rem;
+  color: var(--primary-dark);
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.content-box p {
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+</style>

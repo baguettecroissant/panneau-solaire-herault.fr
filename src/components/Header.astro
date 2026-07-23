@@ -1,0 +1,123 @@
+---
+import config from '../data/config.json';
+---
+
+<header class="site-header">
+  <div class="container header-content">
+    <a href="/" class="brand-logo">
+      <span class="sun-icon">🔆</span>
+      <div class="brand-text">
+        <span class="brand-name">{config.brandName}</span>
+        <span class="brand-sub">Solaire Photovoltaïque (34)</span>
+      </div>
+    </a>
+
+    <nav class="main-nav">
+      <a href="/tarifs">Tarifs 2026</a>
+      <a href="/guide-autoconsommation-herault">Autoconsommation</a>
+      <a href="/aides-panneau-solaire-34">Aides 34</a>
+      <a href="/communes">Communes</a>
+      <a href="/guides">Guides</a>
+    </nav>
+
+    <div class="header-actions">
+      <a href="tel:0467000000" class="phone-link">
+        <span>📞</span> 04 67 00 00 00
+      </a>
+      <a href="/devis" class="btn-primary btn-sm">Devis Gratuit</a>
+    </div>
+  </div>
+</header>
+
+<style>
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.85rem 0;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+}
+
+.sun-icon {
+  font-size: 1.75rem;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-name {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--primary-dark);
+  line-height: 1.1;
+}
+
+.brand-sub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+.main-nav a {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text);
+  transition: color 0.2s;
+}
+
+.main-nav a:hover {
+  color: var(--primary);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.phone-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--primary);
+}
+
+.btn-sm {
+  padding: 0.6rem 1.25rem;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 992px) {
+  .main-nav {
+    display: none;
+  }
+}
+</style>

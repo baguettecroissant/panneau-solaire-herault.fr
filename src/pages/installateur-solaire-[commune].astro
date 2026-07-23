@@ -1,0 +1,174 @@
+---
+import Layout from '../layouts/Layout.astro';
+import StepsForm from '../components/StepsForm.astro';
+import communes from '../data/communes.json';
+
+export async function getStaticPaths() {
+  return communes.map(c => ({
+    params: { commune: c.slug },
+    props: { communeData: c }
+  }));
+}
+
+const { communeData } = Astro.props;
+const { name, codePostal, stats, type } = communeData;
+---
+
+<Layout
+  title={`Installateur Solaire RGE QualiPV à ${name} (${codePostal}) — Devis Pros 34`}
+  description={`Trouvez un installateur solaire certifié RGE QualiPV à ${name} (${codePostal}). Artisan local Hérault pour votre pose de panneaux photovoltaïques et démarches aides 2026.`}
+>
+  <!-- INSTALLER HERO -->
+  <section class="city-hero">
+    <div class="container text-center">
+      <span class="badge-gold">🛡️ ARTISANS CERTIFIÉS QUALIPV RGE (34)</span>
+      <h1 class="city-title">Installateur Solaire RGE à {name} ({codePostal})</h1>
+      <p class="city-subtitle">
+        Poseurs de panneaux photovoltaïques qualifiés pour résidences et mas à {name}
+      </p>
+
+      <div class="city-stats-row">
+        <div class="stat-pill">
+          <span class="stat-num">RGE QualiPV</span>
+          <span class="stat-label">Certification 2026</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-num">25 Ans</span>
+          <span class="stat-label">Garantie Production</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-num">100% Géré</span>
+          <span class="stat-label">Mairie & Enedis 34</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding container">
+    <div class="content-box">
+      <h2 class="h2-tech">Pourquoi choisir un installateur RGE QualiPV à {name} ?</h2>
+      <p class="lead-text">
+        La pose de panneaux photovoltaïques à {name} ({codePostal}) nécessite l'intervention d'un professionnel agréé <strong>QualiPV RGE</strong> (Reconnu Garant de l'Environnement). Cette certification est le sésame légal obligatoire pour percevoir la prime à l'autoconsommation de l'État (jusqu'à 1 680 € pour 6 kWc) et pouvoir souscrire le contrat de rachat de votre surplus par EDF Obligation d'Achat.
+      </p>
+    </div>
+  </section>
+
+  <!-- GARANTIES & ÉTAPES CHANTIER -->
+  <section class="section-padding bg-light">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Les 4 Engagements de nos Installateurs Partners à {name}</h2>
+      </div>
+
+      <div class="features-grid">
+        <div class="card-tech">
+          <div class="feat-icon">📜</div>
+          <h3>1. Certification RGE & Décennale</h3>
+          <p>Tous nos poseurs sont assurés en responsabilité civile et garantie décennale spécifique au photovoltaïque dans l'Hérault.</p>
+        </div>
+
+        <div class="card-tech">
+          <div class="feat-icon">☀️</div>
+          <h3>2. Matériel Monocristallin PERC</h3>
+          <p>Panneaux haute performance et micro-onduleurs Enphase IQ8 optimisés pour le fort ensoleillement de {name}.</p>
+        </div>
+
+        <div class="card-tech">
+          <div class="feat-icon">📑</div>
+          <h3>3. Gestion Administrative Clé en Main</h3>
+          <p>Déclaration préalable à la mairie de {name}, constitution du dossier ABF si zone protégée et raccordement Enedis 34.</p>
+        </div>
+
+        <div class="card-tech">
+          <div class="feat-icon">🤝</div>
+          <h3>4. Suivi de Production & SAV Local</h3>
+          <p>Monitoring en temps réel sur smartphone pour suivre les kWh produits sur vos toitures à {name}.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding container">
+    <StepsForm defaultVille={name} defaultCp={codePostal} />
+  </section>
+</Layout>
+
+<style>
+.city-hero {
+  background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 50%, #1E40AF 100%);
+  color: #FFFFFF;
+  padding: 4rem 0 3.5rem;
+}
+
+.city-title {
+  font-size: 2.5rem;
+  color: #FFFFFF;
+  margin-top: 0.6rem;
+}
+
+.city-subtitle {
+  color: #93C5FD;
+  font-size: 1.15rem;
+  margin-bottom: 2rem;
+}
+
+.city-stats-row {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.stat-pill {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-pill);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-num {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: #FACC15;
+  font-size: 1.15rem;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: #E2E8F0;
+  text-transform: uppercase;
+}
+
+.content-box {
+  background: #FFFFFF;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+}
+
+.h2-tech {
+  color: var(--primary-dark);
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+}
+
+.lead-text {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.feat-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+</style>

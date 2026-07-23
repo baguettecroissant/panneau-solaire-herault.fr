@@ -1,0 +1,64 @@
+---
+import Layout from '../layouts/Layout.astro';
+import config from '../data/config.json';
+---
+
+<Layout
+  title={`Mentions Légales — ${config.brandName}`}
+  description={`Mentions légales et informations éditoriales du site ${config.domain}`}
+>
+  <div class="page-banner bg-light">
+    <div class="container text-center">
+      <h1 class="page-title">Mentions Légales</h1>
+    </div>
+  </div>
+
+  <section class="section-padding container">
+    <div class="content-box">
+      <h2>1. Éditeur du site</h2>
+      <p>
+        Le site internet <strong>{config.domain}</strong> est un service d'information et de mise en relation indépendant spécialisé dans le domaine des équipements d'énergie renouvelable et panneaux solaires photovoltaïques pour le département de l'Hérault (34).
+      </p>
+
+      <h2>2. Hébergement</h2>
+      <p>
+        Le site est hébergé sur la plateforme Cloudflare Pages (Cloudflare Inc., 101 Townsend St, San Francisco, CA 94107, USA).
+      </p>
+
+      <h2>3. Propriété intellectuelle</h2>
+      <p>
+        L'ensemble des contenus (textes, graphismes, données, logos) présents sur ce site est protégé par les lois relatives aux droits d'auteur et à la propriété intellectuelle.
+      </p>
+
+      <h2>4. Protection des données personnelles (RGPD)</h2>
+      <p>
+        Conformément au Règlement Général sur la Protection des Données (RGPD), les informations collectées via nos formulaires sont strictement destinées au traitement des demandes de devis d'installation solaire.
+      </p>
+    </div>
+  </section>
+</Layout>
+
+<style>
+.page-banner {
+  padding: 3rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+.content-box {
+  background: #FFFFFF;
+  border: 1px solid var(--border-color);
+  padding: 2.5rem;
+  border-radius: var(--radius-md);
+  max-width: 850px;
+  margin: 0 auto;
+}
+.content-box h2 {
+  font-size: 1.4rem;
+  color: var(--primary-dark);
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.content-box p {
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+</style>

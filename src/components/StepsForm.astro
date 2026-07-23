@@ -1,0 +1,552 @@
+---
+interface Props {
+  defaultVille?: string;
+  defaultCp?: string;
+}
+
+const { defaultVille = "Montpellier", defaultCp = "34000" } = Astro.props;
+---
+
+<div class="steps-form-card" id="devis">
+  <div class="form-header text-center">
+    <span class="badge-gold">⚡ ÉTUDE GRATUITE & SANS ENGAGEMENT</span>
+    <h2 class="form-title">Demandez vos devis gratuits pour l'Hérault</h2>
+    <p class="form-sub">Comparez jusqu'à 3 installateurs certifiés RGE QualiPV dans le 34</p>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="progress-bar-container">
+    <div class="progress-bar-fill" id="progress-fill" style="width: 20%;"></div>
+    <span class="progress-step-lbl" id="progress-lbl">Étape 1 sur 4 : Votre logement</span>
+  </div>
+
+  <form id="lead-steps-form" class="steps-form" novalidate>
+    <!-- Hidden Fields -->
+    <input type="hidden" name="catId" value="37" />
+
+    <!-- STEP 1: Logement -->
+    <div class="form-step active-step" data-step="1">
+      <h3 class="step-heading">1. Quel est votre type de bien ?</h3>
+      <div class="options-grid">
+        <label class="option-card active">
+          <input type="radio" name="typeBien" value="1" checked />
+          <span class="opt-icon">🏠</span>
+          <span class="opt-label">Maison individuelle</span>
+        </label>
+        <label class="option-card">
+          <input type="radio" name="typeBien" value="2" />
+          <span class="opt-icon">🏢</span>
+          <span class="opt-label">Appartement / Copropriété</span>
+        </label>
+        <label class="option-card">
+          <input type="radio" name="typeBien" value="3" />
+          <span class="opt-icon">🏭</span>
+          <span class="opt-label">Local commercial / Bâtiment</span>
+        </label>
+      </div>
+
+      <div class="step-subgroup">
+        <label class="field-label">Êtes-vous propriétaire ?</label>
+        <div class="radio-row">
+          <label class="radio-inline">
+            <input type="radio" name="situation" value="1" checked /> Propriétaire occupant
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="situation" value="2" /> Propriétaire bailleur
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="situation" value="3" /> Locataire
+          </label>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-primary btn-next" data-next="2">Continuer →</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: Chauffage & Délai -->
+    <div class="form-step" data-step="2">
+      <h3 class="step-heading">2. Votre système de chauffage & délai</h3>
+      
+      <div class="form-group">
+        <label for="chauffageActuel" class="field-label">Chauffage principal actuel</label>
+        <select name="chauffageActuel" id="chauffageActuel" class="form-input">
+          <option value="Électrique (Radiateurs / Climatisation)">Électrique / Climatisation réversible</option>
+          <option value="Pompe à chaleur">Pompe à chaleur (PAC)</option>
+          <option value="Gaz naturel / Propane">Gaz naturel ou propane</option>
+          <option value="Fioul">Fioul</option>
+          <option value="Bois / Pellets">Bois / Poêle à granules</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="field-label">Délai souhaité pour les travaux</label>
+        <div class="options-grid grid-3">
+          <label class="option-card active">
+            <input type="radio" name="delais" value="1" checked />
+            <span class="opt-icon">⚡</span>
+            <span class="opt-label">Immédiat</span>
+          </label>
+          <label class="option-card">
+            <input type="radio" name="delais" value="2" />
+            <span class="opt-icon">📅</span>
+            <span class="opt-label">&lt; 3 mois</span>
+          </label>
+          <label class="option-card">
+            <input type="radio" name="delais" value="3" />
+            <span class="opt-icon">⏳</span>
+            <span class="opt-label">&gt; 3 mois</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-actions row-space">
+        <button type="button" class="btn-secondary btn-prev" data-prev="1">← Retour</button>
+        <button type="button" class="btn-primary btn-next" data-next="3">Continuer →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: Localisation -->
+    <div class="form-step" data-step="3">
+      <h3 class="step-heading">3. Adresse de votre chantier dans l'Hérault</h3>
+
+      <div class="form-group">
+        <label for="adresse" class="field-label">Adresse postale du logement *</label>
+        <input type="text" id="adresse" name="adresse" placeholder="ex: 15 Avenue du Pirée" class="form-input" required />
+      </div>
+
+      <div class="form-row-two">
+        <div class="form-group">
+          <label for="cp" class="field-label">Code postal (34xxx) *</label>
+          <input type="text" id="cp" name="cp" value={defaultCp} placeholder="34000" maxlength="5" class="form-input" required />
+        </div>
+
+        <div class="form-group">
+          <label for="ville" class="field-label">Ville *</label>
+          <input type="text" id="ville" name="ville" value={defaultVille} placeholder="Montpellier" class="form-input" required />
+        </div>
+      </div>
+
+      <div class="form-actions row-space">
+        <button type="button" class="btn-secondary btn-prev" data-prev="2">← Retour</button>
+        <button type="button" class="btn-primary btn-next" data-next="4">Continuer →</button>
+      </div>
+    </div>
+
+    <!-- STEP 4: Coordonnées -->
+    <div class="form-step" data-step="4">
+      <h3 class="step-heading">4. Vos coordonnées pour recevoir vos devis</h3>
+
+      <div class="form-row-two">
+        <div class="form-group">
+          <label for="prenom" class="field-label">Prénom *</label>
+          <input type="text" id="prenom" name="prenom" placeholder="Jean" class="form-input" required />
+        </div>
+
+        <div class="form-group">
+          <label for="nom" class="field-label">Nom *</label>
+          <input type="text" id="nom" name="nom" placeholder="Dupont" class="form-input" required />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email" class="field-label">Adresse Email *</label>
+        <input type="email" id="email" name="email" placeholder="jean.dupont@email.com" class="form-input" required />
+      </div>
+
+      <div class="form-group">
+        <label for="tel" class="field-label">Téléphone (pour confirmation par l'installateur) *</label>
+        <input type="tel" id="tel" name="tel" placeholder="06 12 34 56 78" class="form-input" required />
+      </div>
+
+      <div class="rgpd-notice">
+        🔒 Vos informations sont confidentielles et transmises uniquement aux professionnels QualiPV RGE du 34 sélectionnés pour votre étude.
+      </div>
+
+      <div id="form-error-box" class="error-box" style="display: none;"></div>
+
+      <div class="form-actions row-space">
+        <button type="button" class="btn-secondary btn-prev" data-prev="3">← Retour</button>
+        <button type="submit" class="btn-primary btn-submit" id="btn-submit-lead">
+           Envoyer ma demande de devis
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <!-- SUCCESS BOX -->
+  <div id="form-success-box" class="success-box" style="display: none;">
+    <div class="success-icon">🎉</div>
+    <h3>Votre demande a bien été transmise !</h3>
+    <p>Un conseiller spécialisé dans l'Hérault va analyser votre dossier. Vous recevrez très rapidement jusqu'à 3 devis comparatifs gratuits.</p>
+    <div class="devis-ref" id="devis-ref-display"></div>
+  </div>
+</div>
+
+<style>
+.steps-form-card {
+  background: #FFFFFF;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-lg);
+  padding: 2.5rem;
+  max-width: 720px;
+  margin: 2rem auto;
+}
+
+.form-header {
+  margin-bottom: 2rem;
+}
+
+.form-title {
+  font-size: 1.75rem;
+  margin-top: 0.5rem;
+  color: var(--primary-dark);
+}
+
+.form-sub {
+  color: var(--text-muted);
+}
+
+.progress-bar-container {
+  background: var(--primary-light);
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 2.25rem;
+}
+
+.progress-bar-fill {
+  background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.progress-step-lbl {
+  display: block;
+  text-align: right;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-top: 0.4rem;
+}
+
+.form-step {
+  display: none;
+}
+
+.form-step.active-step {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.step-heading {
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+  color: var(--primary-dark);
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.option-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--bg);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.option-card input[type="radio"] {
+  display: none;
+}
+
+.option-card:hover {
+  border-color: var(--accent);
+  background: var(--primary-light);
+}
+
+.option-card.active {
+  border-color: var(--secondary);
+  background: #FEFCE8;
+  box-shadow: 0 0 0 2px rgba(202, 138, 4, 0.4);
+}
+
+.opt-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.opt-label {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.step-subgroup {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.field-label {
+  display: block;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+}
+
+.radio-row {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.radio-inline {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  background-color: #FFFFFF;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.form-row-two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 600px) {
+  .form-row-two, .grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2rem;
+}
+
+.row-space {
+  justify-content: space-between;
+}
+
+.rgpd-notice {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  background: var(--primary-light);
+  padding: 0.75rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1.25rem;
+}
+
+.error-box {
+  background: #FEF2F2;
+  border: 1px solid #FCA5A5;
+  color: #991B1B;
+  padding: 0.85rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1.25rem;
+  font-size: 0.9rem;
+}
+
+.success-box {
+  text-align: center;
+  padding: 2.5rem 1rem;
+}
+
+.success-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+}
+
+.devis-ref {
+  margin-top: 1.5rem;
+  font-family: var(--font-mono);
+  background: var(--primary-light);
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-pill);
+  display: inline-block;
+  color: var(--primary);
+  font-weight: 600;
+}
+</style>
+
+<script>
+  function initStepsForm() {
+    const form = document.getElementById('lead-steps-form') as HTMLFormElement;
+    if (!form) return;
+
+    const steps = form.querySelectorAll('.form-step');
+    const progressFill = document.getElementById('progress-fill');
+    const progressLbl = document.getElementById('progress-lbl');
+    const errorBox = document.getElementById('form-error-box');
+    const successBox = document.getElementById('form-success-box');
+    const devisRefDisplay = document.getElementById('devis-ref-display');
+    const submitBtn = document.getElementById('btn-submit-lead') as HTMLButtonElement;
+
+    // Option cards selection styling
+    const optionCards = form.querySelectorAll('.option-card');
+    optionCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const parentGrid = card.closest('.options-grid');
+        if (parentGrid) {
+          parentGrid.querySelectorAll('.option-card').forEach(c => c.classList.remove('active'));
+        }
+        card.classList.add('active');
+        const radio = card.querySelector('input[type="radio"]') as HTMLInputElement;
+        if (radio) radio.checked = true;
+      });
+    });
+
+    // Step Navigation
+    function showStep(stepNum: number) {
+      steps.forEach(s => {
+        const el = s as HTMLElement;
+        if (el.dataset.step === String(stepNum)) {
+          el.classList.add('active-step');
+        } else {
+          el.classList.remove('active-step');
+        }
+      });
+
+      const pct = (stepNum / 4) * 100;
+      if (progressFill) progressFill.style.width = `${pct}%`;
+      if (progressLbl) progressLbl.textContent = `Étape ${stepNum} sur 4`;
+    }
+
+    form.querySelectorAll('.btn-next').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const nextStep = Number((btn as HTMLElement).dataset.next);
+
+        // Simple Step 3 validation
+        if (nextStep === 4) {
+          const cp = (form.querySelector('[name="cp"]') as HTMLInputElement).value;
+          const adresse = (form.querySelector('[name="adresse"]') as HTMLInputElement).value;
+          if (!cp.startsWith('34')) {
+            alert('Le code postal doit obligatoirement être un code postal de l\'Hérault (commençant par 34).');
+            return;
+          }
+          if (adresse.length < 4) {
+            alert('Veuillez saisir votre adresse complète.');
+            return;
+          }
+        }
+
+        showStep(nextStep);
+      });
+    });
+
+    form.querySelectorAll('.btn-prev').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const prevStep = Number((btn as HTMLElement).dataset.prev);
+        showStep(prevStep);
+      });
+    });
+
+    // Form Submission
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (errorBox) {
+        errorBox.style.display = 'none';
+        errorBox.innerHTML = '';
+      }
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Envoi en cours...';
+      }
+
+      const formData = new FormData(form);
+      const payload: Record<string, any> = {};
+      formData.forEach((value, key) => {
+        payload[key] = value;
+      });
+
+      payload.pageUrl = window.location.href;
+
+      try {
+        const res = await fetch('/api/lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          form.style.display = 'none';
+          if (successBox) successBox.style.display = 'block';
+          if (devisRefDisplay && data.devis_id) {
+            devisRefDisplay.textContent = `Référence dossier : #${data.devis_id}`;
+          }
+        } else {
+          const errList = data.errors || ['Une erreur est survenue lors de l\'envoi.'];
+          if (errorBox) {
+            errorBox.style.display = 'block';
+            errorBox.innerHTML = errList.map((err: string) => `<div>⚠️ ${err}</div>`).join('');
+          }
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Envoyer ma demande de devis';
+          }
+        }
+      } catch (err) {
+        if (errorBox) {
+          errorBox.style.display = 'block';
+          errorBox.textContent = 'Problème de connexion. Veuillez réessayer.';
+        }
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Envoyer ma demande de devis';
+        }
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initStepsForm);
+</script>

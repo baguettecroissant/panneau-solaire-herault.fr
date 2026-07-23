@@ -1,0 +1,133 @@
+---
+import Layout from '../layouts/Layout.astro';
+import StepsForm from '../components/StepsForm.astro';
+---
+
+<Layout
+  title="Tarifs & Prix Panneau Solaire Hérault (34) — Grille 2026"
+  description="Découvrez les prix complets d'une installation photovoltaïque dans l'Hérault en 2026 : kits 3 kWc, 6 kWc, 9 kWc, batteries et aides déduites."
+>
+  <div class="page-banner bg-light">
+    <div class="container text-center">
+      <span class="badge-gold">💶 TARIFS OFFICIELS 2026</span>
+      <h1 class="page-title">Prix des Panneaux Solaires dans l'Hérault (34)</h1>
+      <p class="page-sub">Transparence totale sur les coûts du matériel, de la pose QualiPV RGE et des aides d'État</p>
+    </div>
+  </div>
+
+  <section class="section-padding container">
+    <div class="table-container">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Type d'installation</th>
+            <th>Description & Matériel</th>
+            <th>Prix TTC (Pose incluse)</th>
+            <th>Prime Autoconsommation</th>
+            <th>Coût Net Estimé</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Kit 3 kWc</strong> (8 panneaux)</td>
+            <td>Autoconsommation maison moyenne (monocristallin PERC + micro-onduleurs)</td>
+            <td><span class="data-mono">6 800 – 9 500 €</span></td>
+            <td><span class="data-mono text-gold">- 1 050 €</span></td>
+            <td><span class="data-mono text-blue">5 750 – 8 450 €</span></td>
+          </tr>
+          <tr>
+            <td><strong>Kit 6 kWc</strong> (16 panneaux)</td>
+            <td>Villa héraultaise avec clim ou pompe à chaleur</td>
+            <td><span class="data-mono">11 500 – 15 500 €</span></td>
+            <td><span class="data-mono text-gold">- 1 680 €</span></td>
+            <td><span class="data-mono text-blue">9 820 – 13 820 €</span></td>
+          </tr>
+          <tr>
+            <td><strong>Kit 9 kWc</strong> (24 panneaux)</td>
+            <td>Forte consommation, piscine chauffée & recharge VE</td>
+            <td><span class="data-mono">15 500 – 21 000 €</span></td>
+            <td><span class="data-mono text-gold">- 2 250 €</span></td>
+            <td><span class="data-mono text-blue">13 250 – 18 750 €</span></td>
+          </tr>
+          <tr>
+            <td><strong>Kit 12+ kWc</strong></td>
+            <td>Grande propriété ou petite activité pro</td>
+            <td><span class="data-mono">19 000 – 28 000 €</span></td>
+            <td><span class="data-mono text-gold">- 2 800 €</span></td>
+            <td><span class="data-mono text-blue">16 200 – 25 200 €</span></td>
+          </tr>
+          <tr>
+            <td><strong>Batterie Lithium LFP</strong></td>
+            <td>Stockage 5 à 10 kWh (autonomie nocturne)</td>
+            <td><span class="data-mono">4 000 – 8 000 €</span></td>
+            <td><span class="data-mono text-gold">TVA 10%</span></td>
+            <td><span class="data-mono text-blue">4 000 – 8 000 €</span></td>
+          </tr>
+          <tr>
+            <td><strong>Micro-onduleurs Enphase IQ8+</strong></td>
+            <td>Optimisation panneau par panneau (ombrage)</td>
+            <td><span class="data-mono">+ 800 – 2 000 €</span></td>
+            <td><span class="data-mono text-gold">Inclus dans kit</span></td>
+            <td><span class="data-mono text-blue">Variable</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="content-box style-box" style="margin-top: 2.5rem;">
+      <h3>Que comprend le tarif d'une installation solaire dans le 34 ?</h3>
+      <ul class="check-list">
+        <li>✅ Visite technique préalable et étude d'ombrage à domicile dans l'Hérault</li>
+        <li>✅ Matériel certifié : panneaux monocristallins full black (garantie linéaire 25 ans)</li>
+        <li>✅ Pose en surimposition ou intégration au bâti par un artisan QualiPV RGE</li>
+        <li>✅ Démarches administratives : Mairie (DP), Consuel et Enedis Hérault</li>
+        <li>✅ Activation de la télégestion et application smartphone de suivi en temps réel</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section-padding bg-light">
+    <div class="container">
+      <StepsForm />
+    </div>
+  </section>
+</Layout>
+
+<style>
+.page-banner {
+  padding: 3.5rem 0 2.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.page-title {
+  font-size: 2.3rem;
+  margin-top: 0.6rem;
+  color: var(--primary-dark);
+}
+
+.page-sub {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+.style-box {
+  background: #FFFFFF;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+}
+
+.style-box h3 {
+  font-size: 1.35rem;
+  color: var(--primary-dark);
+  margin-bottom: 1rem;
+}
+
+.check-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  font-size: 1.05rem;
+}
+</style>

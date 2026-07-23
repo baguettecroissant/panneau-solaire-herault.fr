@@ -1,0 +1,120 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { guides } from '../../data/guides';
+---
+
+<Layout
+  title="Guides & Conseils Solaire Hérault (34) — Blog 2026"
+  description="Consultez tous nos guides experts sur l'installation de panneaux solaires, les tarifs, l'autoconsommation et les aides financières dans l'Hérault."
+>
+  <div class="page-banner bg-light">
+    <div class="container text-center">
+      <span class="badge-gold">📚 GUIDES EXPERTS SOLAIRE</span>
+      <h1 class="page-title">Blog & Conseils Photovoltaïques Hérault (34)</h1>
+      <p class="page-sub">Tout savoir pour réussir votre projet d'énergie solaire à Montpellier, Béziers, Sète...</p>
+    </div>
+  </div>
+
+  <section class="section-padding container">
+    <div class="blog-grid">
+      {guides.map(guide => (
+        <article class="blog-card card-tech">
+          <img src={guide.image} alt={guide.title} class="blog-img" width="400" height="220" />
+          <div class="blog-content">
+            <div class="blog-meta">
+              <span class="b-date">{guide.date}</span>
+              <span class="b-time">⏱️ {guide.readTime}</span>
+            </div>
+            <h2 class="blog-title">
+              <a href={`/guides/${guide.slug}`}>{guide.title}</a>
+            </h2>
+            <p class="blog-excerpt">{guide.excerpt}</p>
+            <a href={`/guides/${guide.slug}`} class="blog-link">Lire le guide complet →</a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</Layout>
+
+<style>
+.page-banner {
+  padding: 3.5rem 0 2.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.page-title {
+  font-size: 2.3rem;
+  margin-top: 0.6rem;
+  color: var(--primary-dark);
+}
+
+.page-sub {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.blog-card {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+}
+
+.blog-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.blog-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.blog-meta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.blog-title {
+  font-size: 1.2rem;
+  line-height: 1.35;
+  margin-bottom: 0.75rem;
+}
+
+.blog-title a {
+  color: var(--primary-dark);
+  text-decoration: none;
+}
+
+.blog-title a:hover {
+  color: var(--secondary);
+}
+
+.blog-excerpt {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+  line-height: 1.5;
+  flex-grow: 1;
+}
+
+.blog-link {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--primary);
+}
+</style>

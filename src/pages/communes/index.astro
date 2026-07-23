@@ -1,0 +1,153 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import communes from '../../data/communes.json';
+---
+
+<Layout
+  title="Annuaire des Communes de l'Hérault (34) — Installation Solaire"
+  description="Trouvez votre commune dans l'Hérault (34) pour simuler vos économies d'énergie solaire et consulter les tarifs des artisans QualiPV RGE locaux."
+>
+  <div class="page-banner bg-light">
+    <div class="container text-center">
+      <span class="badge-gold">📍 DÉPARTEMENT DE L'HÉRAULT (34)</span>
+      <h1 class="page-title">79 Communes couverte par nos Installateurs Solaires</h1>
+      <p class="page-sub">Sélectionnez votre ville pour consulter les prévisions de production photovoltaïque réelles</p>
+    </div>
+  </div>
+
+  <section class="section-padding container">
+    <div class="search-box">
+      <input type="text" id="commune-search" placeholder="🔍 Rechercher une commune (ex: Montpellier, Béziers, Sète, Agde...)" class="search-input" />
+    </div>
+
+    <div class="communes-grid-all" id="communes-list">
+      {communes.map(c => (
+        <div class="commune-card-full card-tech" data-name={c.name.toLowerCase()} data-cp={c.codePostal}>
+          <div class="c-head">
+            <h3 class="c-title">{c.name} ({c.codePostal})</h3>
+            <span class="c-pop">{c.population.toLocaleString('fr-FR')} hab.</span>
+          </div>
+          <p class="c-desc">{c.type}</p>
+          <div class="c-links">
+            <a href={`/panneau-solaire-${c.slug}`} class="btn-sm btn-secondary">
+              Guide & Solaire →
+            </a>
+            <a href={`/installateur-solaire-${c.slug}`} class="btn-sm btn-primary">
+              Installateurs RGE →
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</Layout>
+
+<style>
+.page-banner {
+  padding: 3.5rem 0 2.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.page-title {
+  font-size: 2.3rem;
+  margin-top: 0.6rem;
+  color: var(--primary-dark);
+}
+
+.page-sub {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+.search-box {
+  max-width: 600px;
+  margin: 0 auto 2.5rem;
+}
+
+.search-input {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--border-color);
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.communes-grid-all {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.commune-card-full {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.c-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.5rem;
+}
+
+.c-title {
+  font-size: 1.15rem;
+  color: var(--primary-dark);
+}
+
+.c-pop {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.c-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+  line-height: 1.4;
+}
+
+.c-links {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-sm {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+  border-radius: var(--radius-pill);
+}
+</style>
+
+<script>
+  function initSearch() {
+    const input = document.getElementById('commune-search') as HTMLInputElement;
+    const cards = document.querySelectorAll('.commune-card-full');
+
+    if (!input) return;
+
+    input.addEventListener('input', () => {
+      const q = input.value.toLowerCase().trim();
+      cards.forEach(card => {
+        const el = card as HTMLElement;
+        const name = el.dataset.name || '';
+        const cp = el.dataset.cp || '';
+        if (name.includes(q) || cp.includes(q)) {
+          el.style.display = 'flex';
+        } else {
+          el.style.display = 'none';
+        }
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initSearch);
+</script>

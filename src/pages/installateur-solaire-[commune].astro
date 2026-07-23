@@ -54,6 +54,11 @@ const { name, codePostal, stats, type, blocs, links } = communeData;
         <p style="color: var(--text-muted); font-size: 1rem; line-height: 1.6;">
           Nos installateurs partenaires locaux dans l'Hérault prennent en charge l'intégralité du chantier, de la pose de l'échafaudage à la déclaration préalable d'urbanisme.
         </p>
+        <div style="margin-top: 1.25rem; border-top: 1px solid #E2E8F0; padding-top: 0.85rem;">
+          <a href={`/panneau-solaire-${communeData.slug}`} style="font-weight: 700; text-decoration: underline; color: var(--primary); font-size: 0.95rem;">
+            ☀️ Consulter notre guide de production et d'aides solaires à {name} →
+          </a>
+        </div>
       </div>
 
       <div class="card-tech">

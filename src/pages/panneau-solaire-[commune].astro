@@ -210,6 +210,12 @@ const schemaLocal = {
             <span class="m-lbl">Délai Raccordement</span>
           </div>
         </div>
+        
+        <div style="margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+          <a href={`/installateur-solaire-${communeData.slug}`} style="font-weight: 700; text-decoration: underline; color: var(--primary); font-size: 0.95rem;">
+            🔍 Trouver un installateur certifié RGE QualiPV à {name} →
+          </a>
+        </div>
       </div>
 
       <StepsForm defaultVille={name} defaultCp={codePostal} />

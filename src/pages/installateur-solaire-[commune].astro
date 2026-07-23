@@ -11,7 +11,7 @@ export async function getStaticPaths() {
 }
 
 const { communeData } = Astro.props;
-const { name, codePostal, stats, type } = communeData;
+const { name, codePostal, stats, type, blocs, links } = communeData;
 ---
 
 <Layout
@@ -45,11 +45,40 @@ const { name, codePostal, stats, type } = communeData;
   </section>
 
   <section class="section-padding container">
-    <div class="content-box">
-      <h2 class="h2-tech">Pourquoi choisir un installateur RGE QualiPV à {name} ?</h2>
-      <p class="lead-text">
-        La pose de panneaux photovoltaïques à {name} ({codePostal}) nécessite l'intervention d'un professionnel agréé <strong>QualiPV RGE</strong> (Reconnu Garant de l'Environnement). Cette certification est le sésame légal obligatoire pour percevoir la prime à l'autoconsommation de l'État (jusqu'à 1 680 € pour 6 kWc) et pouvoir souscrire le contrat de rachat de votre surplus par EDF Obligation d'Achat.
-      </p>
+    <div class="two-col-grid">
+      <div class="content-box">
+        <h2 class="h2-tech">Pourquoi choisir un installateur RGE QualiPV à {name} ?</h2>
+        <p class="lead-text" style="margin-bottom: 1rem;">
+          La pose de panneaux photovoltaïques à {name} ({codePostal}) nécessite l'intervention d'un professionnel agréé <strong>QualiPV RGE</strong> (Reconnu Garant de l'Environnement). Cette certification est le sésame légal obligatoire pour percevoir la prime à l'autoconsommation de l'État (jusqu'à 1 680 € pour 6 kWc) et pouvoir souscrire le contrat de rachat de votre surplus par EDF Obligation d'Achat.
+        </p>
+        <p style="color: var(--text-muted); font-size: 1rem; line-height: 1.6;">
+          Nos installateurs partenaires locaux dans l'Hérault prennent en charge l'intégralité du chantier, de la pose de l'échafaudage à la déclaration préalable d'urbanisme.
+        </p>
+      </div>
+
+      <div class="card-tech">
+        <h3 class="card-title-lg" style="font-size: 1.2rem; color: var(--primary-dark); margin-top: 0.5rem; margin-bottom: 0.75rem; font-family: var(--font-heading); font-weight: 700;">📋 Démarches Administratives à {name}</h3>
+        <p style="font-size: 0.95rem; margin-bottom: 1rem; color: var(--text-muted);">
+          Chaque projet fait l'objet d'une déclaration préalable en mairie et d'un raccordement au réseau de distribution Enedis 34.
+        </p>
+        <ul style="padding-left: 1.25rem; font-size: 0.9rem; display: flex; flex-direction: column; gap: 0.5rem; list-style: disc;">
+          <li>
+            <a href={links.mairie} target="_blank" rel="noopener" style="text-decoration: underline; font-weight: 600;">
+              Service Urbanisme Mairie de {name}
+            </a> (Dépôt Déclaration Préalable)
+          </li>
+          <li>
+            <a href={links.renov} target="_blank" rel="noopener" style="text-decoration: underline; font-weight: 600;">
+              Rénov'Occitanie (Aides Hérault 34)
+            </a>
+          </li>
+          <li>
+            <a href={links.enedis} target="_blank" rel="noopener" style="text-decoration: underline; font-weight: 600;">
+              Enedis Raccordement
+            </a> (Portail de raccordement solaire)
+          </li>
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -170,5 +199,16 @@ const { name, codePostal, stats, type } = communeData;
 .feat-icon {
   font-size: 2.5rem;
   margin-bottom: 0.75rem;
+}
+.two-col-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.75rem;
+}
+
+@media (max-width: 800px) {
+  .two-col-grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

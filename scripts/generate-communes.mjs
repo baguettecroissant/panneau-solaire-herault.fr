@@ -7,7 +7,7 @@ const rawCommunes = [
   { name: 'Sète', cp: '34200', pop: 44000, type: 'Ville maritime, toitures plates et maisons de pécheurs' },
   { name: 'Agde', cp: '34300', pop: 29000, type: 'Station balnéaire & résidences secondaires du Cap' },
   { name: 'Lunel', cp: '34400', pop: 26000, type: 'Plaine lunelloise, toitures canal & grandes villas' },
-  { name: 'Frontignan', cp: '34110', pop: 23000, type: 'Bassin de Thau, maisons individuelles et environnement salin' },
+  { name: 'Frontignan', cp: '34110', pop: 23000, type: 'Muscat & plages, toitures terrasse' },
   { name: 'Castelnau-le-Lez', cp: '34170', pop: 23000, type: 'Résidentiel haut de gamme & villas RE2020' },
   { name: 'Mauguio', cp: '34130', pop: 17000, type: 'Plaine agricole & Carnon littoral' },
   { name: 'Lattes', cp: '34970', pop: 17000, type: 'Quartiers neufs pré-câblés & mas héraultais' },
@@ -77,7 +77,6 @@ const rawCommunes = [
   { name: 'Capestang', cp: '34310', pop: 3300, type: 'Collégiale & maisons au bord du canal' },
   { name: 'Nissan-lez-Enserune', cp: '34440', pop: 4000, type: 'Oppidum d\'Ensérune & toitures canal' },
   { name: 'Montady', cp: '34310', pop: 4000, type: 'Étang asséché de Montady & mas' },
-  { name: 'Frontignan', cp: '34110', pop: 23000, type: 'Muscat & plages, toitures terrasse' },
   { name: 'Nébian', cp: '34800', pop: 1500, type: 'Cœur d\'Hérault & villas de campagne' },
   { name: 'Saint-Paul-et-Valmalle', cp: '34570', pop: 1200, type: 'Vallée de la Mosson & cadre vert' },
   { name: 'Saussan', cp: '34570', pop: 1600, type: 'Village résidentiel & maisons individuelles' },
@@ -93,19 +92,205 @@ for (const c of rawCommunes) {
 }
 const communesList = Array.from(uniqueCommunesMap.values());
 
+const getCommuneCategory = (name) => {
+  const littoralList = ['sete', 'agde', 'frontignan', 'villeneuve-les-maguelone', 'la-grande-motte', 'marseillan', 'balaruc-les-bains', 'palavas-les-flots', 'valras-plage', 'vias', 'portiragnes', 'vic-la-gardiole', 'balaruc-le-vieux', 'meze'];
+  const urbainList = ['montpellier', 'beziers'];
+  const montagneuxList = ['lodeve', 'bedarieux'];
+  const suburbainList = [
+    'castelnau-le-lez', 'juvignac', 'perols', 'saint-jean-de-vedas', 'grabels', 'vendargues', 'jacou', 
+    'le-cres', 'clapiers', 'montferrier-sur-lez', 'saint-aunes', 'baillargues', 'castries', 'saint-bres', 
+    'lansargues', 'gigean', 'montbazin', 'poussan', 'cournonterral', 'cournonsec', 'fabregues', 'pignan', 
+    'laverune', 'saint-georges-d-orques', 'vailhauques', 'montarnaud', 'saussan', 'murviel-les-montpellier', 
+    'lattes', 'mauguio'
+  ];
+
+  const slug = name.toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+
+  if (littoralList.includes(slug)) return 'littoral';
+  if (urbainList.includes(slug)) return 'urbain';
+  if (montagneuxList.includes(slug)) return 'montagneux';
+  if (suburbainList.includes(slug)) return 'suburbain';
+  return 'viticole';
+};
+
 const generateCommuneData = (c) => {
   const slug = c.name.toLowerCase()
     .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
 
-  // Calculate customized yield and ROI stats
+  const category = getCommuneCategory(c.name);
+
+  // Yield settings
   const sunHours = 2700;
-  const yieldPerKwc = 1350; // kWh per kWc in Herault
+  let yieldPerKwc = 1350;
+  if (category === 'montagneux') yieldPerKwc = 1380; // cooler air increase
+  if (category === 'littoral') yieldPerKwc = 1365; // sea albedo increase
+
   const prod3kwc = Math.round(3 * yieldPerKwc);
   const prod6kwc = Math.round(6 * yieldPerKwc);
   const savings6kwc = Math.round(prod6kwc * 0.2516); // ~2 038 € / year savings
   const prime6kwc = 1680; // Prime autoconsommation 2026
+
+  let intro = '';
+  let conseil = '';
+  let patrimoine = '';
+  let faq = [];
+  let market = {};
+
+  if (category === 'urbain') {
+    intro = `Passer à l'énergie solaire à ${c.name} (${c.codePostal}) constitue une opportunité majeure pour réduire vos factures d'électricité urbaine. Dans cette grande agglomération de l'Hérault, les toitures résidentielles subissent directement l'impact de la chaleur estivale. L'installation de modules photovoltaïques en autoconsommation permet d'alimenter vos systèmes de climatisation au moment précis où le soleil frappe le plus fort, limitant ainsi vos achats au réseau national.`;
+    
+    conseil = `Pour les projets situés à ${c.name}, la réglementation d'urbanisme locale (PLU) impose des règles strictes en matière d'aspect extérieur. L'obtention d'une déclaration préalable en mairie est requise. Si votre bâtiment se trouve à proximité d'un monument historique (comme les abords de l'Écusson à Montpellier ou les arènes de Béziers), l'avis conforme des Architectes des Bâtiments de France (ABF) est obligatoire avant toute intervention de raccordement Enedis.`;
+    
+    patrimoine = `Afin d'intégrer harmonieusement les capteurs sur les toitures urbaines de ${c.name}, l'usage de panneaux solaires monocristallins ultra-sombres de type "Full Black" est vivement conseillé. De plus, pour contrer les zones d'ombres partielles causées par les platanes ou les cheminées des immeubles voisins, nos installateurs partenaires RGE QualiPV préconisent des micro-onduleurs Enphase IQ8 pour optimiser chaque cellule indépendamment.`;
+    
+    faq = [
+      {
+        q: `Faut-il obligatoirement l'accord des Bâtiments de France à ${c.name} ?`,
+        a: `Oui, si votre maison à ${c.name} se situe dans un périmètre sauvegardé ou historique. Dans ce cas, les panneaux de couleur uniforme noire (Full Black) posés en surimposition discrète sont généralement exigés par les ABF.`
+      },
+      {
+        q: `Comment optimiser le rendement en milieu urbain dense à ${c.name} ?`,
+        a: `En utilisant des micro-onduleurs individuels sous chaque panneau. Ainsi, l'ombrage partiel d'un bâtiment voisin ou d'un arbre de rue n'affecte pas l'ensemble de votre production photovoltaïque.`
+      },
+      {
+        q: `Où s'adresser pour déposer le dossier en mairie de ${c.name} ?`,
+        a: `Le dossier de déclaration préalable (DP) doit être déposé directement au service urbanisme de la mairie de ${c.name} ou envoyé en ligne via leur portail de guichet unique.`
+      }
+    ];
+
+    market = {
+      installateursRGE: 54,
+      croissanceAns: '+42%',
+      delaiMoyen: '3 à 5 semaines',
+      prixMoyen6Kwc: '11 900 € - 15 500 €'
+    };
+  } else if (category === 'littoral') {
+    intro = `L'installation de panneaux solaires à ${c.name} (${c.codePostal}) bénéficie de conditions d'ensoleillement maximales sur le littoral héraultais. L'absence d'ombrage géographique naturel et la réverbération de la mer (effet d'albedo) maximisent le rendement par mètre carré. Cependant, le milieu côtier impose des contraintes physiques particulières que nos partenaires QualiPV RGE maîtrisent parfaitement.`;
+    
+    conseil = `À ${c.name}, la proximité de la mer expose le matériel à l'humidité saline et aux vents marins violents. Il est impératif d'utiliser des panneaux solaires certifiés résistants à la corrosion saline (norme IEC 61701 grade 6) et des structures de fixation robustes en aluminium anodisé ou en inox. Une déclaration d'urbanisme spécifique au littoral doit être validée en mairie avant de procéder à la mise en service Enedis Hérault.`;
+    
+    patrimoine = `Que ce soit sur les toitures-terrasses des constructions modernes du littoral ou les maisons de pêcheurs traditionnelles à Sète ou Marseillan, l'intégration solaire à ${c.name} respecte le paysage marin. Les modules monocristallins sont fixés à l'aide de crochets en inox ultra-résistants capables de supporter la Tramontane et les tempêtes marines sans compromettre l'étanchéité du bâtiment.`;
+    
+    faq = [
+      {
+        q: `L'air salin de ${c.name} abîme-t-il les panneaux photovoltaïques ?`,
+        a: `Non, à condition de choisir des panneaux solaires haut de gamme bénéficiant d'un traitement anti-corrosion saline certifié (norme IEC 61701). Nos installateurs n'utilisent que des métaux nobles (inox, alu) pour l'intégration.`
+      },
+      {
+        q: `Les panneaux solaires résistent-ils aux coups de vent sur les côtes de ${c.name} ?`,
+        a: `Oui, les structures de surimposition posées par des professionnels certifiés RGE dans l'Hérault sont homologuées pour résister à des rafales de vent de plus de 210 km/h conformes aux normes Eurocode.`
+      },
+      {
+        q: `Faut-il nettoyer plus souvent ses panneaux solaires sur le littoral de ${c.name} ?`,
+        a: `Les résidus de sel et de sable peuvent légèrement réduire la production. Bien que les pluies régulières fassent l'essentiel du nettoyage, un rinçage à l'eau claire sans détergent est recommandé une fois par an au printemps.`
+      }
+    ];
+
+    market = {
+      installateursRGE: 29,
+      croissanceAns: '+38%',
+      delaiMoyen: '4 à 6 semaines',
+      prixMoyen6Kwc: '12 200 € - 15 900 €'
+    };
+  } else if (category === 'suburbain') {
+    intro = `Installer des panneaux solaires photovoltaïques à ${c.name} (${c.codePostal}) s'inscrit parfaitement dans la transition énergétique des communes résidentielles de la couronne montpelliéraine. Avec la multiplication des villas modernes équipées de pompes à chaleur (PAC) et de véhicules électriques, l'autoconsommation directe permet d'effacer une grande partie de vos dépenses énergétiques diurnes.`;
+    
+    conseil = `Dans les quartiers récents et les lotissements de ${c.name}, de nombreuses maisons individuelles ont été bâties selon les normes RT2012 ou RE2020. Ces habitations modernes possèdent souvent des fourreaux électriques pré-câblés reliant les combles au tableau électrique, ce qui simplifie grandement l'installation et réduit le coût de pose. Une simple déclaration préalable en mairie de ${c.name} suffit avant de lancer le raccordement auprès d'Enedis.`;
+    
+    patrimoine = `Les architectures résidentielles de ${c.name} offrent d'excellentes surfaces de toitures orientées sud ou est-ouest. L'usage de panneaux photovoltaïques Full Black en surimposition s'intègre discrètement sur les tuiles contemporaines. Nos électriciens certifiés RGE QualiPV préconisent d'y associer une borne de recharge intelligente pour charger votre voiture directement avec le surplus de courant produit sur votre toit.`;
+    
+    faq = [
+      {
+        q: `Peut-on alimenter une pompe à chaleur et charger sa voiture électrique à ${c.name} ?`,
+        a: `Oui. L'autoconsommation photovoltaïque à ${c.name} est idéale pour couvrir en journée les besoins d'une PAC réversible et d'un véhicule hybride ou électrique, réduisant de 70% vos coûts de carburant et de chauffage.`
+      },
+      {
+        q: `Quels sont les délais administratifs pour un projet solaire à ${c.name} ?`,
+        a: `Comptez en moyenne 1 mois pour l'obtention de la déclaration préalable (DP) en mairie de ${c.name}, 1 à 2 jours pour la pose du matériel, et 2 à 3 semaines pour la mise en service Enedis Hérault.`
+      },
+      {
+        q: `Peut-on installer des panneaux solaires sur un abri voiture (carport) à ${c.name} ?`,
+        a: `Tout à fait. Si votre toiture principale de maison est ombragée ou mal orientée à ${c.name}, la création d'un carport solaire ou d'une pergola photovoltaïque dans le jardin est une excellente alternative.`
+      }
+    ];
+
+    market = {
+      installateursRGE: 48,
+      croissanceAns: '+45%',
+      delaiMoyen: '3 à 4 semaines',
+      prixMoyen6Kwc: '11 500 € - 14 500 €'
+    };
+  } else if (category === 'montagneux') {
+    intro = `Le potentiel solaire à ${c.name} (${c.codePostal}) présente des atouts de rendement spécifiques à l'altitude. Située dans l'arrière-pays héraultais, cette zone géographique bénéficie d'une atmosphère plus fraîche. Les cellules photovoltaïques fonctionnant mieux à basse température, l'efficacité des modules solaires y est en moyenne 4% supérieure à celle des plaines lors des chaudes journées d'été.`;
+    
+    conseil = `Pour les installations solaires à ${c.name}, la toiture doit être conçue pour faire face aux contraintes de montagne (comme le poids de la neige ou la force des orages cévenols). L'ancrage des fixations en surimposition sur les chevrons doit être renforcé. Toutes les démarches en mairie de ${c.name} pour l'accord d'urbanisme et le Consuel sont prises en charge par nos poseurs locaux certifiés RGE.`;
+    
+    patrimoine = `Les habitations de ${c.name} et des hauts cantons héraultais possèdent souvent des toits à forte inclinaison couverts de tuiles canal épaisses ou d'ardoises. Les techniciens solaires du 34 utilisent des crochets de fixation robustes adaptés pour préserver l'étanchéité originale des toits anciens tout en assurant une résistance maximale à la prise au vent.`;
+    
+    faq = [
+      {
+        q: `Le froid de l'arrière-pays héraultais à ${c.name} nuit-il aux panneaux solaires ?`,
+        a: `Au contraire. Les panneaux solaires sont des capteurs de lumière, pas de chaleur. Le froid relatif en altitude à ${c.name} permet de stabiliser la température des cellules photovoltaïques et d'améliorer leur rendement par rapport à la plaine.`
+      },
+      {
+        q: `Comment se comporte l'installation face à la neige ou la grêle à ${c.name} ?`,
+        a: `Les verres trempés de nos panneaux solaires QualiPV RGE sont certifiés pour résister aux impacts de grêle sévères (norme IEC 61215) et aux charges de neige lourdes. L'inclinaison du toit favorise le glissement naturel de la neige.`
+      },
+      {
+        q: `Quel est le rendement de production annuel en altitude à ${c.name} ?`,
+        a: `Grâce à l'altitude et à l'air frais, une installation à ${c.name} produit environ 1 380 kWh par kWc installé par an, un chiffre supérieur à la moyenne nationale.`
+      }
+    ];
+
+    market = {
+      installateursRGE: 18,
+      croissanceAns: '+32%',
+      delaiMoyen: '4 à 6 semaines',
+      prixMoyen6Kwc: '11 400 € - 14 900 €'
+    };
+  } else {
+    // category === 'viticole' (plaine / agricultural regions / valleys)
+    intro = `Passer à l'énergie solaire à ${c.name} (${c.codePostal}) est particulièrement adapté aux grandes surfaces de toitures disponibles dans cette plaine agricole de l'Hérault. Les mas traditionnels et les domaines agricoles bénéficient d'un ensoleillement direct exceptionnel sans aucune obstruction urbaine, ce qui en fait des sites idéaux pour des centrales solaires de 3 kWc, 6 kWc ou 9 kWc.`;
+    
+    conseil = `Pour les habitations et mas de ${c.name}, la demande de raccordement Enedis peut parfois nécessiter un passage en compteur triphasé selon la puissance de votre kit solaire. Les démarches d'urbanisme se font auprès du service compétent de la mairie de ${c.name}. Nos partenaires électriciens certifiés RGE QualiPV du 34 s'occupent de toute la partie technique et administrative pour vous garantir l'accès aux aides d'État 2026.`;
+    
+    patrimoine = `Le charme de nos communes viticoles comme Pézenas ou Pinet exige des finitions soignées. Les installations photovoltaïques sur tuiles canal languedociennes anciennes utilisent des systèmes de crochets double-ancrage pour ne pas fragiliser les tuiles en terre cuite d'origine. Les panneaux full-black garantissent une intégration visuelle élégante sur les bâtisses de caractère.`;
+    
+    faq = [
+      {
+        q: `Peut-on équiper les toitures des domaines agricoles ou des mas à ${c.name} ?`,
+        a: `Oui, les grands toits des mas viticoles ou hangars de stockage de ${c.name} offrent des surfaces optimales pour installer des systèmes photovoltaïques de grande puissance (jusqu'à 36 kWc), générant d'importants revenus de revente du surplus.`
+      },
+      {
+        q: `Comment poser des panneaux solaires sur des tuiles canal anciennes à ${c.name} ?`,
+        a: `Nos artisans RGE utilisent des fixations de toiture brevetées qui se glissent sous la tuile canal de courant et s'ancrent fermement sur la charpente, assurant l'étanchéité sans avoir à sceller les tuiles.`
+      },
+      {
+        q: `Quels sont les avantages fiscaux pour la revente de surplus à ${c.name} ?`,
+        a: `En autoconsommation avec vente du surplus, les revenus générés sont totalement exonérés d'impôt en dessous de 3 kWc, et bénéficient d'un abattement avantageux de 71% (Micro-BIC) au-delà.`
+      }
+    ];
+
+    market = {
+      installateursRGE: 35,
+      croissanceAns: '+35%',
+      delaiMoyen: '4 à 7 semaines',
+      prixMoyen6Kwc: '11 200 € - 14 800 €'
+    };
+  }
+
+  // Inject authoritative outbound links
+  const links = {
+    renov: 'https://renovoccitanie.laregion.fr/',
+    enedis: 'https://www.enedis.fr/raccorder-mon-panneau-solaire',
+    mairie: `https://www.google.com/search?q=urbanisme+mairie+${encodeURIComponent(c.name)}`,
+    servicePublic: 'https://www.service-public.fr/particuliers/vosdroits/F31487'
+  };
 
   return {
     name: c.name,
@@ -115,6 +300,8 @@ const generateCommuneData = (c) => {
     type: c.type,
     sunHours,
     yieldPerKwc,
+    category,
+    links,
     stats: {
       prod3kwc: `${prod3kwc.toLocaleString('fr-FR')} kWh/an`,
       prod6kwc: `${prod6kwc.toLocaleString('fr-FR')} kWh/an`,
@@ -122,29 +309,11 @@ const generateCommuneData = (c) => {
       prime6kwc: `${prime6kwc.toLocaleString('fr-FR')} €`
     },
     blocs: {
-      intro: `Passer au solaire à ${c.name} (${c.codePostal}) est une décision d'une rentabilité exceptionnelle. Bénéficiant de plus de 2 700 heures d'ensoleillement annuel dans l'Hérault, les toitures de ${c.name} — qu'il s'agisse de tuiles canal languedociennes, de mas viticoles ou de résidences neuves RE2020 pré-câblées — affichent un rendement moyen de 1 350 kWh par kWc installé. Face à l'explosion des factures d'électricité liées à l'usage des climatiseurs en été et des pompes à chaleur en hiver, l'autoconsommation photovoltaïque permet de couvrir jusqu'à 80% des besoins énergétiques de votre foyer.`,
-      conseil: `À ${c.name}, tout projet d'installation solaire donne accès aux aides financières 2026 : la prime à l'autoconsommation (jusqu'à 1 680 € pour un kit 6 kWc), la TVA réduite à 10% et le contrat de revente du surplus EDF OA garanti sur 20 ans. Dans le département du 34, une déclaration préalable de travaux auprès de la mairie de ${c.name} est obligatoire. Si votre bien se situe dans le périmètre protégé d'un monument historique (comme les abords de l'Écusson à Montpellier ou le Canal du Midi), notre équipe d'installateurs certifiés RGE QualiPV prend en charge le dossier Bâtiments de France (ABF) ainsi que la demande de raccordement Enedis Hérault.`,
-      patrimoine: `À l'instar des plus belles architectures de l'Hérault — du patrimoine historique biterrois aux constructions modernes bordant le littorale — les installations solaires à ${c.name} sont conçues pour s'intégrer harmonieusement. Les modules monocristallins full black dernière génération épousent la ligne des toitures en tuiles canal sans dénaturer le charme local. Grâce au micro-onduleur Enphase IQ8, chaque panneau produit indépendamment, garantissant une efficacité maximale même en cas d'ombrage partiel causé par les pins parasols ou les platanes centenaires.`,
-      faq: [
-        {
-          q: `Quel est le prix moyen d'une installation solaire à ${c.name} ?`,
-          a: `Le coût TTC avant aides varie selon la puissance : de 6 800 € à 9 500 € pour un kit 3 kWc (idéal maison individuelle), et de 11 500 € à 15 500 € pour 6 kWc. Après déduction de la prime à l'autoconsommation, le ROI net est atteint en 5 à 7 ans à ${c.name}.`
-        },
-        {
-          q: `La tramontane et les coups de mer détériorent-ils les panneaux solaires à ${c.name} ?`,
-          a: `Non. Les panneaux installés par nos partenaires QualiPV RGE sont certifiés pour résister aux rafales de vent de plus de 210 km/h et possèdent une protection anti-corrosion saline renforcée idéale pour le climat héraultais.`
-        },
-        {
-          q: `Quels sont les délais d'installation et de raccordement Enedis dans le 34 ?`,
-          a: `Comptez environ 3 à 4 semaines pour l'accord d'urbanisme de la mairie de ${c.name}, 1 à 2 jours pour la pose physique des panneaux, puis 2 à 4 semaines pour la mise en service Enedis Hérault.`
-        }
-      ],
-      marche: {
-        installateursRGE: 42,
-        croissanceAns: '+40%',
-        delaiMoyen: '4 à 6 semaines',
-        prixMoyen6Kwc: '11 500 € - 14 900 €'
-      }
+      intro,
+      conseil,
+      patrimoine,
+      faq,
+      marche: market
     }
   };
 };
@@ -157,4 +326,4 @@ if (!fs.existsSync(targetDir)) {
 }
 
 fs.writeFileSync(path.join(targetDir, 'communes.json'), JSON.stringify(fullCommunesData, null, 2));
-console.log(`✅ Generated ${fullCommunesData.length} communes in src/data/communes.json`);
+console.log(`✅ Generated ${fullCommunesData.length} unique categorized communes in src/data/communes.json`);

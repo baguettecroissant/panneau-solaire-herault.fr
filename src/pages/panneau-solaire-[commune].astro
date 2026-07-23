@@ -12,7 +12,7 @@ export async function getStaticPaths() {
 }
 
 const { communeData } = Astro.props;
-const { name, codePostal, population, stats, blocs } = communeData;
+const { name, codePostal, population, stats, blocs, links } = communeData;
 
 const schemaLocal = {
   "@context": "https://schema.org",
@@ -91,7 +91,31 @@ const schemaLocal = {
       <div class="card-tech">
         <span class="badge-blue">📋 Démarches & Aides 34</span>
         <h3 class="card-title-lg">Conseils & Réglementation Solaire à {name}</h3>
-        <p>{blocs.conseil}</p>
+        <p style="margin-bottom: 1.25rem;">{blocs.conseil}</p>
+        
+        <h4 style="font-size: 0.95rem; margin-top: 1rem; margin-bottom: 0.5rem; color: var(--primary-dark);">🔗 Liens utiles & Démarches officielles :</h4>
+        <ul style="padding-left: 1.25rem; font-size: 0.9rem; display: flex; flex-direction: column; gap: 0.4rem; list-style: disc;">
+          <li>
+            <a href={links.mairie} target="_blank" rel="noopener" style="text-decoration: underline; font-weight: 600;">
+              Service Urbanisme de la Mairie de {name}
+            </a> (Dépôt Déclaration Préalable)
+          </li>
+          <li>
+            <a href={links.renov} target="_blank" rel="noopener" style="text-decoration: underline; font-weight: 600;">
+              Rénov'Occitanie
+            </a> (Accompagnement et aides régionales du 34)
+          </li>
+          <li>
+            <a href={links.enedis} target="_blank" rel="noopener" style="text-decoration: underline; font-weight: 600;">
+              Enedis Raccordement
+            </a> (Portail de raccordement de vos panneaux photovoltaïques)
+          </li>
+          <li>
+            <a href={links.servicePublic} target="_blank" rel="noopener" style="text-decoration: underline; font-weight: 600;">
+              Service-Public.fr
+            </a> (Réglementation et fiscalité officielle du solaire)
+          </li>
+        </ul>
       </div>
 
       <!-- Patrimoine & Toiture Local -->
